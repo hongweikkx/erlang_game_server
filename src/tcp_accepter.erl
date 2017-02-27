@@ -12,7 +12,7 @@
 -behaviour(gen_server).
 
 %% API
--export([start_link/0]).
+-export([start_link/2]).
 
 %% gen_server callbacks
 -export([init/1,
@@ -24,7 +24,7 @@
 
 -define(SERVER, ?MODULE).
 
--record(state, {}).
+-record(state, {accepter_name, lsock}).
 
 %%%===================================================================
 %%% API
@@ -36,10 +36,10 @@
 %%
 %% @end
 %%--------------------------------------------------------------------
--spec(start_link() ->
+-spec(start_link(AccepterNum::integer(), LSock::term()) ->
     {ok, Pid :: pid()} | ignore | {error, Reason :: term()}).
-start_link() ->
-    gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
+start_link(AccepterNum, LSock) ->
+    gen_server:start_link({local, ?SERVER}, ?MODULE, [AccepterNum, LSock], []).
 
 %%%===================================================================
 %%% gen_server callbacks
@@ -59,8 +59,17 @@ start_link() ->
 -spec(init(Args :: term()) ->
     {ok, State :: #state{}} | {ok, State :: #state{}, timeout() | hibernate} |
     {stop, Reason :: term()} | ignore).
-init([]) ->
-    {ok, #state{}}.
+init([AccepterNum, LSock]) ->
+    AccepterName = create_accepter_worker_name(AccepterNum),
+    register(self(), AccepterName),
+    case prim_inet:async_accept(LSock, infinity) of
+        {ok, _} ->
+            {ok, #state{lsock = LSock, accepter_name = AccepterName}};
+        Error ->
+            %% todo need logger sys
+            io:format("create accepter worker:~p error, the error is :~p~n", [AccepterName, Error]),
+            {stop, error}
+    end.
 
 %%--------------------------------------------------------------------
 %% @private
@@ -77,8 +86,14 @@ init([]) ->
     {noreply, NewState :: #state{}, timeout() | hibernate} |
     {stop, Reason :: term(), Reply :: term(), NewState :: #state{}} |
     {stop, Reason :: term(), NewState :: #state{}}).
-handle_call(_Request, _From, State) ->
-    {reply, ok, State}.
+handle_call(Info, _From, State) ->
+    try
+        do_call(_Info, _From, State)
+    catch
+        _:Reason  ->
+            io:format("do_call info:~p wrong, the reason is:~p~n", [Info, Reason]),
+            {reply, error, State}
+    end.
 
 %%--------------------------------------------------------------------
 %% @private
@@ -91,8 +106,14 @@ handle_call(_Request, _From, State) ->
     {noreply, NewState :: #state{}} |
     {noreply, NewState :: #state{}, timeout() | hibernate} |
     {stop, Reason :: term(), NewState :: #state{}}).
-handle_cast(_Request, State) ->
-    {noreply, State}.
+handle_cast(Info, State) ->
+    try
+        do_cast(Info, State)
+    catch
+        _:Reason  ->
+            io:format("do_call info:~p wrong, the reason is:~p~n", [Info, Reason]),
+            {noreply, State}
+    end.
 
 %%--------------------------------------------------------------------
 %% @private
@@ -109,7 +130,13 @@ handle_cast(_Request, State) ->
     {noreply, NewState :: #state{}, timeout() | hibernate} |
     {stop, Reason :: term(), NewState :: #state{}}).
 handle_info(_Info, State) ->
-    {noreply, State}.
+    try
+        do_info(_Info, State)
+    catch
+        _:Reason  ->
+            io:format("do_call info:~p wrong, the reason is:~p~n", [_Info, Reason]),
+            {noreply, State}
+    end.
 
 %%--------------------------------------------------------------------
 %% @private
@@ -144,3 +171,23 @@ code_change(_OldVsn, State, _Extra) ->
 %%%===================================================================
 %%% Internal functions
 %%%===================================================================
+create_accepter_worker_name(AccepterNum) ->
+    list_to_atom(lists:concat(["accepter_worker_", AccepterNum])).
+
+do_call(_Info, _From, State) ->
+    io:format("#### do_call msg:~p is undefined.~n", [_Info]),
+    {reply, error, State}.
+
+do_cast(_Info, State) ->
+    io:format("#### do_cast msg:~p is undefined.~n", [_Info]),
+    {noreply, State}.
+
+do_info({inet_async, L, _Ref, {ok, S}}, State) when L =:= State#state.lsock ->
+    %% todo 开启客户端进程
+    {noreply, State};
+do_info({inet_acync, _L, _Ref, Error}, State) ->
+    io:format("#### do_info accept error:~p~n", [Error]),
+    {noreply, State};
+do_info(_Info, State) ->
+    io:format("#### do_info msg:~p is undefined.~n", [_Info]),
+    {noreply, State}.

@@ -23,6 +23,8 @@
     code_change/3]).
 
 -define(SERVER, ?MODULE).
+-define(TCP_OPT,[{ip, any}, inet,
+        {backlog, 5}, {active, false}, {packet, 2}, {keepalive, true}, binary]).
 
 -record(state, {}).
 
@@ -60,8 +62,19 @@ start_link() ->
     {ok, State :: #state{}} | {ok, State :: #state{}, timeout() | hibernate} |
     {stop, Reason :: term()} | ignore).
 init([]) ->
-    %% 需要做的事情就是 先做一个
-    {ok, #state{}}.
+    %% 需要做的事情就是 我认为是先起来tcp_accepter_sup下的几个程序 然后再初始化tcp_listener
+    %% 这样的话，是可以的
+    %% todo 以后将这些数据都放在配置文件中
+    Port = 12000,
+    case gen_tcp:listen(Port, ?TCP_OPT) of
+        {ok, LSock} ->
+            AccepterSum = 10,
+            [tcp_accepter_sup:start_child(AcceperNum, LSock) || AcceperNum <- lists:seq(1, AccepterSum)],
+            {ok, #state{}};
+        _Error ->
+            io:format("######### gen_tcp listen port:~p error, the error is :~p~n", [Port, _Error]),
+            {stop, error}
+    end.
 
 %%--------------------------------------------------------------------
 %% @private
