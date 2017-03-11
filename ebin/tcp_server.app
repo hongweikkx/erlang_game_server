@@ -5,4 +5,6 @@
               {applications,[kernel,stdlib]},
               {mod,{tcp_server_app,[]}},
               {env,[]},
-              {modules,[tcp_server_app,tcp_server_sup]}]}.
+              {modules,[tcp_accepter,tcp_accepter_sup,tcp_client,
+                        tcp_client_sup,tcp_listener,tcp_listener_sup,
+                        tcp_server_app,tcp_server_sup]}]}.

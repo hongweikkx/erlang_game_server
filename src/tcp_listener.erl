@@ -91,8 +91,14 @@ init([]) ->
     {noreply, NewState :: #state{}, timeout() | hibernate} |
     {stop, Reason :: term(), Reply :: term(), NewState :: #state{}} |
     {stop, Reason :: term(), NewState :: #state{}}).
-handle_call(_Request, _From, State) ->
-    {reply, ok, State}.
+handle_call(_Info, _From, State) ->
+    try
+        do_call(_Info, _From, State)
+    catch
+        _:Reason  ->
+            io:format("do_call info:~p wrong, the reason is:~p~n", [_Info, Reason]),
+            {reply, error, State}
+    end.
 
 %%--------------------------------------------------------------------
 %% @private
@@ -105,8 +111,14 @@ handle_call(_Request, _From, State) ->
     {noreply, NewState :: #state{}} |
     {noreply, NewState :: #state{}, timeout() | hibernate} |
     {stop, Reason :: term(), NewState :: #state{}}).
-handle_cast(_Request, State) ->
-    {noreply, State}.
+handle_cast(Info, State) ->
+    try
+        do_cast(Info, State)
+    catch
+        _:Reason  ->
+            io:format("do_call info:~p wrong, the reason is:~p~n", [Info, Reason]),
+            {noreply, State}
+    end.
 
 %%--------------------------------------------------------------------
 %% @private
@@ -123,7 +135,13 @@ handle_cast(_Request, State) ->
     {noreply, NewState :: #state{}, timeout() | hibernate} |
     {stop, Reason :: term(), NewState :: #state{}}).
 handle_info(_Info, State) ->
-    {noreply, State}.
+    try
+        do_info(_Info, State)
+    catch
+        _:Reason  ->
+            io:format("do_call info:~p wrong, the reason is:~p~n", [_Info, Reason]),
+            {noreply, State}
+    end.
 
 %%--------------------------------------------------------------------
 %% @private
@@ -158,3 +176,14 @@ code_change(_OldVsn, State, _Extra) ->
 %%%===================================================================
 %%% Internal functions
 %%%===================================================================
+do_call(_Info, _From, State) ->
+    io:format("#### do_call msg:~p is undefined.~n", [_Info]),
+    {reply, error, State}.
+
+do_cast(_Info, State) ->
+    io:format("#### do_cast msg:~p is undefined.~n", [_Info]),
+    {noreply, State}.
+
+do_info(_Info, State) ->
+    io:format("#### do_info msg:~p is undefined.~n", [_Info]),
+    {noreply, State}.
