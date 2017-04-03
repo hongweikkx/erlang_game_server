@@ -25,9 +25,6 @@
 
 -define(SERVER, ?MODULE).
 
--record(client_state, {sock,
-        state = ?CLIENT_STATE_UNLOGIN,
-        recv_ref}).
 
 %%%===================================================================
 %%% API
@@ -169,46 +166,69 @@ code_change(_OldVsn, State, _Extra) ->
 %%%===================================================================
 %%% Internal functions
 %%%===================================================================
-do_call(_Info, _From, State) ->
+do_call(_Info, _From, ClientState) ->
     io:format("#### do_call msg:~p is undefined.~n", [_Info]),
-    {reply, error, State}.
+    {reply, error, ClientState}.
 
-do_cast(_Info, State) ->
+do_cast(_Info, ClientState) ->
     io:format("#### do_cast msg:~p is undefined.~n", [_Info]),
-    {noreply, State}.
+    {noreply, ClientState}.
 
-do_info(timeout, State) ->
-    NState = recv_packet(State),
-    {noreply, NState};
+do_info(timeout, ClientState) ->
+    NClientState = recv_packet(ClientState),
+    {noreply, NClientState};
 
-do_info({inet_async, S, Ref, Packet}, State) when State#client_state.sock =:= S
-                    andalso  State#client_state.recv_ref =:= Ref ->
-    io:format("######Status:~p~n", [Packet]),
-    _Packet = unpack_packet(Packet),
-    %% todo 处理包
-    NState = recv_packet(S),
-    {noreply, NState};
+do_info({inet_async, S, Ref, Packet}, ClientState) when ClientState#client_state.sock =:= S
+                    andalso  ClientState#client_state.recv_ref =:= Ref ->
+    %% todo
+    io:format("######Packet:~p~n", [Packet]),
+    {ok, Cmd, Data} = reivse_packet(Packet),
+    NNClientState =
+    case routing(Cmd, Data) of
+        {ok, rolelist, NData} ->
+            NClientState = pp_login:get_rolelist(ClientState, NData),
+            NClientState;
+        {ok, create, NData} ->
+            NClientState = pp_login:create_role(ClientState, NData),
+            NClientState;
+        {ok, login, NData} ->
+            NClientState = pp_login:login_role(ClientState, NData),
+            NClientState;
+        {ok, Cmd, NData} ->
+            %% 应该cast到玩家进程去执行的
+            NClientState = cast_logic_solve_data_to_user(ClientState, Cmd, NData),
+            NClientState
+    end,
+    {noreply, NNClientState};
 
-do_info({'EXIT', S, _Reason}, State) when State#client_state.sock =:=  S ->
+do_info({'EXIT', S, _Reason}, ClientState) when ClientState#client_state.sock =:=  S ->
     io:format("####sock is closed, the reason is:~p~n", [_Reason]),
-    {noreply, State};
+    {noreply, ClientState};
 
-do_info(_Info, State) ->
+do_info(_Info, ClientState) ->
     io:format("#### do_info msg:~p is undefined.~n", [_Info]),
-    {noreply, State}.
+    {noreply, ClientState}.
 
-recv_packet(State) ->
-    Sock = State#client_state.sock,
-    NState =
+recv_packet(ClientState) ->
+    Sock = ClientState#client_state.sock,
+    NClientState =
         case prim_inet:recv(Sock, 0) of
         {ok, Ref} ->
-            State#client_state{recv_ref = Ref};
+            ClientState#client_state{recv_ref = Ref};
         Error ->
             io:format("####prim_inet recv error:~p~n", [Error]),
-            State
+            ClientState
         end,
-    {noreply, NState}.
+    {noreply, NClientState}.
 
-unpack_packet(_Status) ->
-    %%todo
-    ok.
+%% todo 解包
+reivse_packet(Packet) ->
+    Packet.
+
+
+%% 用配套的协议解析文件解析
+routing(Cmd, Data) ->
+    {ok, Cmd, Data}.
+
+cast_logic_solve_data_to_user(ClientState, _Cmd, _NData) ->
+    ClientState.

@@ -1,0 +1,40 @@
+// 客户端再平台验证后，通过这个协议来获取本服务器的角色列表
+message cs_10000{
+    required int32 server_id = 1;     // 服务器id
+    required int32 platform_id = 2;   // 平台id
+    required string platform = 3;     // 平台
+    required string suid = 4;         // 平台账号
+}
+
+message role_info{
+    required string nick_name = 1;
+    required int32 sex = 2;
+    required int32 career = 3;
+}
+message sc_10000{
+    required int32 ret = 1;   // 返回值
+    repeated role_info role_list = 2;
+}
+
+// 创角色
+message cs_10001{
+    required role_info role = 1;
+}
+message sc_10001{
+    required int32 ret = 1;
+    required role_info role = 2;
+}
+
+// 登陆角色  我觉的登陆的时候肯定需要这些东西来进行验证
+message cs_10002{
+    required int32 server_id = 1;
+    required int32 platform_id = 2;
+    required string platform = 3;
+    required string suid = 4;
+    required string nick_name = 5;
+    required int32 sex = 6;
+    required int32 career = 7;
+}
+message sc_10002{
+    required int32 ret  = 1;    // 返回值
+}

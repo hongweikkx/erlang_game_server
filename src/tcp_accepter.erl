@@ -204,19 +204,19 @@ do_info(_Info, State) ->
 
 start_client(S) ->
     case tcp_client_sup:start_child(S) of
-        {ok, Pid} when is_pid(Pid) ->
-            case gen_tcp:controlling_process(S, Pid) of
-                {error, Reason} ->
-                    %% 没有将Sock转移出去 应该是发生了不可预知的错误
-                    io:format("#########gen_tcp controllint process is error, the reason is :~p~n", [Reason]),
-                    error;
-                ok ->
-                    %% Sock 转移了出去
-                    %% todo 这里在需要自己再去关闭一下socket么。 会不会都关掉 会
-                    %% gen_tcp:close(S)
-                    ok
-            end;
-        {error, Error} ->
-            io:format("###### tcp_client_sup start child error, The Error is:~p~n", [Error]),
-            error
+    {ok, Pid} when is_pid(Pid) ->
+        case gen_tcp:controlling_process(S, Pid) of
+        {error, Reason} ->
+            %% 没有将Sock转移出去 应该是发生了不可预知的错误
+            io:format("#########gen_tcp controllint process is error, the reason is :~p~n", [Reason]),
+            error;
+        ok ->
+            %% Sock 转移了出去
+            %% todo 这里在需要自己再去关闭一下socket么。 会不会都关掉 会
+            %% gen_tcp:close(S)
+            ok
+        end;
+    {error, Error} ->
+        io:format("###### tcp_client_sup start child error, The Error is:~p~n", [Error]),
+        error
     end.

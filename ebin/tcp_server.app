@@ -5,6 +5,9 @@
               {applications,[kernel,stdlib]},
               {mod,{tcp_server_app,[]}},
               {env,[]},
-              {modules,[tcp_accepter,tcp_accepter_sup,tcp_client,
-                        tcp_client_sup,tcp_listener,tcp_listener_sup,
-                        tcp_server_app,tcp_server_sup]}]}.
+              {modules,[db_agent_user,lib_send,make_proto,pokemon_pb,pp_login,
+                        proto10,proto10_pb,protobuffs,protobuffs_cli,
+                        protobuffs_compile,protobuffs_file,protobuffs_parser,
+                        protobuffs_scanner,tcp_accepter,tcp_accepter_sup,
+                        tcp_client,tcp_client_sup,tcp_listener,
+                        tcp_listener_sup,tcp_server_app,tcp_server_sup]}]}.
