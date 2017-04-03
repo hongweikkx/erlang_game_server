@@ -2,27 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ae3d84f-6cb7-4049-9353-c5ab17bfa322" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/proto/proto10.proto" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/script/make_proto.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/db_agent/db_agent_user.erl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/lib_send.erl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pp_proto/pp_login.erl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/protobuffs/Emakefile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/protobuffs/make_proto.erl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/protobuffs/pokemon_pb.erl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/protobuffs/proto10.erl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/protobuffs/protobuffs.erl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/protobuffs/protobuffs_cli.erl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/protobuffs/protobuffs_compile.erl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/protobuffs/protobuffs_file.erl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.rebar/erlcinfo" afterPath="$PROJECT_DIR$/.rebar/erlcinfo" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/tcp_client.beam" afterPath="$PROJECT_DIR$/ebin/tcp_client.beam" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/tcp_server.app" afterPath="$PROJECT_DIR$/ebin/tcp_server.app" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/user.hrl" afterPath="$PROJECT_DIR$/include/user.hrl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tcp_accepter.erl" afterPath="$PROJECT_DIR$/src/tcp_accepter.erl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tcp_client.erl" afterPath="$PROJECT_DIR$/src/tcp_client.erl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tcp_server.iml" afterPath="$PROJECT_DIR$/tcp_server.iml" />
     </list>
     <ignored path="tcp_server.iws" />
     <ignored path=".idea/workspace.xml" />
