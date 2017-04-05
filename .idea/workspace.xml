@@ -1,40 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2ae3d84f-6cb7-4049-9353-c5ab17bfa322" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/rebar.config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run.config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/db_agent/db_agent.erl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/game_server.erl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.rebar/erlcinfo" afterPath="$PROJECT_DIR$/.rebar/erlcinfo" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/db_agent_user.beam" afterPath="$PROJECT_DIR$/ebin/db_agent_user.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/lib_send.beam" afterPath="$PROJECT_DIR$/ebin/lib_send.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/make_proto.beam" afterPath="$PROJECT_DIR$/ebin/make_proto.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/pokemon_pb.beam" afterPath="$PROJECT_DIR$/ebin/pokemon_pb.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/pp_login.beam" afterPath="$PROJECT_DIR$/ebin/pp_login.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/proto10.beam" afterPath="$PROJECT_DIR$/ebin/proto10.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/proto10_pb.beam" afterPath="$PROJECT_DIR$/ebin/proto10_pb.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/protobuffs.beam" afterPath="$PROJECT_DIR$/ebin/protobuffs.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/protobuffs_cli.beam" afterPath="$PROJECT_DIR$/ebin/protobuffs_cli.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/protobuffs_compile.beam" afterPath="$PROJECT_DIR$/ebin/protobuffs_compile.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/protobuffs_file.beam" afterPath="$PROJECT_DIR$/ebin/protobuffs_file.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/protobuffs_parser.beam" afterPath="$PROJECT_DIR$/ebin/protobuffs_parser.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/protobuffs_scanner.beam" afterPath="$PROJECT_DIR$/ebin/protobuffs_scanner.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/tcp_accepter.beam" afterPath="$PROJECT_DIR$/ebin/tcp_accepter.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/tcp_accepter_sup.beam" afterPath="$PROJECT_DIR$/ebin/tcp_accepter_sup.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/tcp_client.beam" afterPath="$PROJECT_DIR$/ebin/tcp_client.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/tcp_client_sup.beam" afterPath="$PROJECT_DIR$/ebin/tcp_client_sup.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/tcp_listener.beam" afterPath="$PROJECT_DIR$/ebin/tcp_listener.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/tcp_listener_sup.beam" afterPath="$PROJECT_DIR$/ebin/tcp_listener_sup.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/tcp_server_app.beam" afterPath="$PROJECT_DIR$/ebin/tcp_server_app.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/tcp_server_sup.beam" afterPath="$PROJECT_DIR$/ebin/tcp_server_sup.beam" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebin/tcp_server.app" afterPath="$PROJECT_DIR$/ebin/tcp_server.app" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tcp_accepter.erl" afterPath="$PROJECT_DIR$/src/tcp_accepter.erl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tcp_server.app.src" afterPath="$PROJECT_DIR$/src/tcp_server.app.src" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tcp_server_app.erl" afterPath="$PROJECT_DIR$/src/tcp_server_app.erl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tcp_server.iml" afterPath="$PROJECT_DIR$/tcp_server.iml" />
-    </list>
+    <list default="true" id="2ae3d84f-6cb7-4049-9353-c5ab17bfa322" name="Default" comment="" />
     <ignored path="tcp_server.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
