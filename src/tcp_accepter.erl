@@ -67,7 +67,7 @@ init([AccepterNum, LSock]) ->
             {ok, #state{lsock = LSock, accepter_name = AccepterName}};
         Error ->
             %% todo need logger sys
-            io:format("create accepter worker:~p error, the error is :~p~n", [AccepterName, Error]),
+            lager:info("create accepter worker:~p error, the error is :~p~n", [AccepterName, Error]),
             {stop, error}
     end.
 
@@ -91,7 +91,7 @@ handle_call(Info, _From, State) ->
         do_call(Info, _From, State)
     catch
         _:Reason  ->
-            io:format("do_call info:~p wrong, the reason is:~p~n", [Info, Reason]),
+            lager:error("do_call info:~p wrong, the reason is:~p~n", [Info, Reason]),
             {reply, error, State}
     end.
 

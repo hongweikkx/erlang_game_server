@@ -7,6 +7,6 @@
                   kernel,
                   stdlib
                  ]},
-  {mod, { tcp_server_app, []}},
+  {mod, {tcp_server_app, []}},
   {env, []}
  ]}.
