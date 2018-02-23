@@ -22,12 +22,6 @@ start() ->
     ok.
 
 start_db(Id) ->
-    Host = "127.0.0.1",
-    User = "gaohongwei",
-    Password = "rsrzrcj",
-    Post = 3306,
-    Database = "k_game_db",
-    ConnectNums = 5,
     p1_mysql:start_link(Id, Host, Post, User, Password, Database),
     [p1_mysql:connect(Id, Host, Post, User, Password, Database, true) || _Num <- lists:seq(1, ConnectNums)],
     ok.
