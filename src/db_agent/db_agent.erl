@@ -21,13 +21,11 @@ start() ->
     [start_db(DbId) || DbId <- DBList],
     ok.
 
-start_db(Id) ->
-    p1_mysql:start_link(Id, Host, Post, User, Password, Database),
-    [p1_mysql:connect(Id, Host, Post, User, Password, Database, true) || _Num <- lists:seq(1, ConnectNums)],
+start_db(_Id) ->
     ok.
 
 stop() ->
-    p1_mysql:stop().
+    ok.
 
 
 

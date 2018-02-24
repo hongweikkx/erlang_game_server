@@ -7,7 +7,9 @@
 %%% Created : 04. 四月 2017 下午11:04
 %%%-------------------------------------------------------------------
 -module(game_server).
--author("gaohongwei").
+-include("common.hrl").
+-define(APPS, [crypto, lager, emysql, ranch_tcp]).
+
 
 %% API
 -export([
@@ -16,14 +18,22 @@
 ]).
 
 start() ->
-    %% todo 服务器公共进程的开启
-    %% 开启客户端接收进程
-    start_client().
+    ensure_start(?APPS).
 
-start_client() ->
-    io:format("##### start client.~n"),
-    tcp_server_sup:start_link().
+
+ensure_start([App | Tail]) ->
+    case application:ensure_all_started(App) of
+        {ok, _} ->
+            ensure_start(Tail);
+        {error, Reason} ->
+            lager:error("start app:~p error, reason:~p ~n", [App, Reason]),
+            ok
+    end.
 
 stop() ->
-    %% todo 服务器公共进程的关闭
+    stop(lists:reverse(?APPS)),
     ok.
+
+stop([App | Tail]) ->
+    application:stop(App),
+    stop(Tail).
